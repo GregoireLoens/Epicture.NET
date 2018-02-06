@@ -28,7 +28,6 @@ namespace epitecture.Api
                     httpRequestMessage.Content = httpContent;
                     break;
             }
-
             return await _client.SendAsync(request);
         }
     }
