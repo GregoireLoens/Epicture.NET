@@ -21,12 +21,10 @@ namespace epitecture.Api
             {
                 httpRequestMessage.Headers.Add(head.Key, head.Value);
             }
-            switch (method.Method)
+            if (method.Method == "POST")
             {
-                case "POST":
                     HttpContent httpContent = new StringContent(content, Encoding.UTF8, "application/json");
                     httpRequestMessage.Content = httpContent;
-                    break;
             }
             return await _client.SendAsync(request);
         }
