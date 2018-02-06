@@ -9,11 +9,6 @@ namespace epitecture.Api.Flikr
    public class FlickrApi:  AApi
     {
 
-        public override void Init()
-        {
-            throw new NotImplementedException();
-        }
-
         public override void LoadImage()
         {
             throw new NotImplementedException();
