@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace epitecture.Api
 {
-     abstract class AApi
+     public abstract class AApi
     {
-        private String Token { set; get; };
+        private String Token { set; get; }
 
         public abstract void Init();
         public abstract void LoadImage();
