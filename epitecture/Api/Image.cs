@@ -14,6 +14,11 @@ namespace epitecture.Api
         private UInt32 _height { set; get; } = 0;
         private String _url { set; get; } = "";
 
+        public Image()
+        {
+
+        }
+
         public Image(String orgn, String name, String url, UInt32 width, UInt32 height)
         {
             _origin = orgn;

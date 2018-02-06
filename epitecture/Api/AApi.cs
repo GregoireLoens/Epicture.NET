@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace epitecture.Api
 {
-     public abstract class AApi
+     public class AApi
     {
         private String Token { set; get; }
 
-        public virtual void Init() { }
-        public abstract void LoadImage();
-        public abstract void UploadImage();
-        public abstract void SearchImage();
+        public virtual  void Init() { }
+        public virtual void LoadImage() { }
+        public virtual void UploadImage() { }
+        public virtual void SearchImage() { }
     }
 }
