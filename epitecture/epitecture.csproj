@@ -92,6 +92,10 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Api\AApi.cs" />
+    <Compile Include="Api\Api.cs" />
+    <Compile Include="Api\Flickr\FlickrApi.cs" />
+    <Compile Include="Api\Image.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
