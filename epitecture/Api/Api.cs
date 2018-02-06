@@ -32,10 +32,7 @@ namespace epitecture.Api
 
             return await _client.SendAsync(request);
         }
-        public override void Init()
-        {
 
-        }
         public override void LoadImage()
         {
 

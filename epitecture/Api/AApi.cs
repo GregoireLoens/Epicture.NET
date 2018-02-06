@@ -10,7 +10,7 @@ namespace epitecture.Api
     {
         private String Token { set; get; }
 
-        public abstract void Init();
+        public virtual void Init() { }
         public abstract void LoadImage();
         public abstract void UploadImage();
         public abstract void SearchImage();
