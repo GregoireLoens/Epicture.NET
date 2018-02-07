@@ -11,22 +11,21 @@ namespace epitecture.Api
     {
         private static readonly HttpClient _client = new HttpClient();
 
-        static async Task<HttpResponseMessage> Request(HttpMethod method, String url, String content, Dictionary<String, String> header)
-        {
-            HttpRequestMessage request = new HttpRequestMessage();
-            var httpRequestMessage = new HttpRequestMessage();
-            httpRequestMessage.Method = method;
-            httpRequestMessage.RequestUri = new Uri(url);
-            foreach (var head in header)
-            {
-                httpRequestMessage.Headers.Add(head.Key, head.Value);
-            }
-            if (method.Method == "POST")
-            {
-                    HttpContent httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-                    httpRequestMessage.Content = httpContent;
-            }
-            return await _client.SendAsync(request);
-        }
+      public static async Task<HttpResponseMessage> Request(HttpMethod method, String url, String content, Dictionary<String, String> header)
+              {
+                  var httpRequestMessage = new HttpRequestMessage();
+                  httpRequestMessage.Method = method;
+                  httpRequestMessage.RequestUri = new Uri(url);
+                  foreach (var head in header)
+                  {
+                      httpRequestMessage.Headers.Add(head.Key, head.Value);
+                  }
+                  if (method.Method == "POST")
+                  {
+                      HttpContent httpContent = new StringContent(content, Encoding.UTF8, "application/json");
+                      httpRequestMessage.Content = httpContent;
+                  }
+                  return await _client.SendAsync(httpRequestMessage);
+              }
     }
 }
