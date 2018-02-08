@@ -14,5 +14,7 @@ namespace epitecture.Api
         public virtual async Task<IList<Image>> LoadImage() { }
         public virtual async Task<bool> UploadImage() { }
         public virtual async Task<Ilist<Image>> SearchImage(string search = "", size sz = 0, type tp = 0) { }
+        public virtual async Task<Ilist<bool>> addToFav() { }
+        public virtual async Task<Ilist<bool>> delFav() { }
     }
 }
