@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace epitecture.Api.Imgur
@@ -12,7 +13,7 @@ namespace epitecture.Api.Imgur
             base.Init();
         }
 
-      public void LoadImage()
+      public override async Task<IList<Image>> LoadImage()
              {
                  var method = new HttpMethod("get");
                  var url = "https://api.imgur.com/3/gallery/hot";
@@ -21,26 +22,29 @@ namespace epitecture.Api.Imgur
                  {
                      {"Authorization", "Client-ID 55c8986212a8f48"}
                  };
-                 var task = Request(method, url, content, header);
-                 var response = task.Result;
-                 var result = response.Content.ReadAsStringAsync();
-                 var json = JsonConvert.DeserializeObject<Infos>(result.Result);
-                 foreach (var tmp in json.data)
-                 {
-                     if (tmp.images != null)
-                     {
-                         foreach (var tmp2 in tmp.images)
-                         {
-                             if (tmp2 != null)
-                             {
-                                 //get içi les infos dont on a besoin chaque tmp2 est un obj image
-                             }
-                         }
-                     }
-                 }
-             }
+                 var task = await Request(method, url, content, header);
+            if (task.IsSuccessStatusCode)
+            {
+                var response = task.Result;
+                var result = response.Content.ReadAsStringAsync();
+                var json = JsonConvert.DeserializeObject<Infos>(result.Result);
+                foreach (var tmp in json.data)
+                {
+                    if (tmp.images != null)
+                    {
+                        foreach (var tmp2 in tmp.images)
+                        {
+                            if (tmp2 != null)
+                            {
+                                //get içi les infos dont on a besoin chaque tmp2 est un obj image
+                            }
+                        }
+                    }
+                }
+            }
+      }
 
-        public override void SearchImage(string search = "", size sz = 0, type tp = 0)
+        public override async Task<IList<Image>> SearchImage(string search = "", size sz = 0, type tp = 0)
         {
             var method = new HttpMethod("get");
             var url = "https://api.imgur.com/3/gallery/search/";
@@ -102,26 +106,29 @@ namespace epitecture.Api.Imgur
                 var tmp = string.Concat("?q_any=", search);
                 url = string.Concat(url, tmp);
             }
-            var task = Request(method, url, content, header);
-            var response = task.Result;
-            var result = response.Content.ReadAsStringAsync();
-            var json = JsonConvert.DeserializeObject<Infos>(result.Result);
-            foreach (var tmp in json.data)
+            var task = await Request(method, url, content, header);
+            if (task.IsSuccessStatusCode)
             {
-                if (tmp.images != null)
+                var response = task.Result;
+                var result = response.Content.ReadAsStringAsync();
+                var json = JsonConvert.DeserializeObject<Infos>(result.Result);
+                foreach (var tmp in json.data)
                 {
-                    foreach (var tmp2 in tmp.images)
+                    if (tmp.images != null)
                     {
-                        if (tmp2 != null)
+                        foreach (var tmp2 in tmp.images)
                         {
-                            //get içi les infos dont on a besoin chaque tmp2 est un obj image
+                            if (tmp2 != null)
+                            {
+                                //get içi les infos dont on a besoin chaque tmp2 est un obj image
+                            }
                         }
                     }
                 }
             }
         }
 
-        public override void UploadImage()
+        public override async Task<bool> UploadImage()
         {
             var method = new HttpMethod("post");
             var url = "https://api.imgur.com/3/gallery/hot";
@@ -130,19 +137,22 @@ namespace epitecture.Api.Imgur
                  {
                      {"Authorization", "Bearer a7e66bd16f106e8ac0a514be2d4c869ed497c299"}
                  };
-            var task = Request(method, url, content, header);
-            var response = task.Result;
-            var result = response.Content.ReadAsStringAsync();
-            var json = JsonConvert.DeserializeObject<Infos>(result.Result);
-            foreach (var tmp in json.data)
+            var task = await Request(method, url, content, header);
+            if (task.IsSuccessStatusCode)
             {
-                if (tmp.images != null)
+                var response = task.Result;
+                var result = response.Content.ReadAsStringAsync();
+                var json = JsonConvert.DeserializeObject<Infos>(result.Result);
+                foreach (var tmp in json.data)
                 {
-                    foreach (var tmp2 in tmp.images)
+                    if (tmp.images != null)
                     {
-                        if (tmp2 != null)
+                        foreach (var tmp2 in tmp.images)
                         {
-                            //get içi les infos dont on a besoin chaque tmp2 est un obj image
+                            if (tmp2 != null)
+                            {
+                                //get içi les infos dont on a besoin chaque tmp2 est un obj image
+                            }
                         }
                     }
                 }
