@@ -21,6 +21,23 @@ namespace epitecture
     public sealed partial class Imgur : Page, INotifyPropertyChanged {
 
         private ObservableCollection<Img> _images { get; } = new ObservableCollection<Img>();
+        private ObservableCollection<Api.AApi.size> _sizes { get; } = new ObservableCollection<Api.AApi.size> {
+            Api.AApi.size.none,
+            Api.AApi.size.small,
+            Api.AApi.size.med,
+            Api.AApi.size.big,
+            Api.AApi.size.lrg,
+            Api.AApi.size.huge
+        };
+        private ObservableCollection<Api.AApi.type> _types { get; } = new ObservableCollection<Api.AApi.type>() {
+            Api.AApi.type.none,
+            Api.AApi.type.jpg,
+            Api.AApi.type.png,
+            Api.AApi.type.gif,
+            Api.AApi.type.anigif,
+            Api.AApi.type.album
+        };
+
         public event PropertyChangedEventHandler PropertyChanged;
         public double ItemSize {
             get => _itemSize;
@@ -58,6 +75,9 @@ namespace epitecture
                 await GetItemsAsync();
             }
 
+            SizeCB.SelectedIndex = 0;
+            TypeCB.SelectedIndex = 0;
+
             base.OnNavigatedTo(e);
         }
 
@@ -75,7 +95,12 @@ namespace epitecture
         }
 
         private void SearchBt_Click(object sender, RoutedEventArgs e) {
-            this.Frame.Navigate(typeof(ImgurSearch), SearchText.Text);
+            var param = new Tuple<String, Api.AApi.size, Api.AApi.type>(
+                SearchText.Text,
+                (Api.AApi.size)SizeCB.SelectedValue,
+                (Api.AApi.type)TypeCB.SelectedValue
+                );
+            this.Frame.Navigate(typeof(ImgurSearch), param);
         }
     }
 }

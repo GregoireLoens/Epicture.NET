@@ -46,6 +46,7 @@ namespace epitecture.Api.Imgur
 
         public override async Task<IList<Img>> SearchImage(string search = "", size sz = 0, type tp = 0)
         {
+            char transition = '?';
             var method = new HttpMethod("GET");
             var url = "https://api.imgur.com/3/gallery/search/";
             Dictionary<string, string> header = new Dictionary<string, string>
@@ -75,34 +76,36 @@ namespace epitecture.Api.Imgur
                         break;
 
                 }
+                transition = '&';
             }
-            else if (tp != 0)
+            if (tp != 0)
             {
                 switch (tp)
                 {
                     case (type.jpg):
-                        url = url + "?q_type=jpg";
+                        url = url + transition + "q_type=jpg";
                         break;
                     case (type.png):
-                        url = url + "?q_type=png";
+                        url = url + transition + "q_type=png";
                         break;
                     case (type.gif):
-                        url = url + "?q_type=gif";
+                        url = url + transition + "q_type=gif";
                         break;
                     case (type.anigif):
-                        url = url + "?q_type=anigif";
+                        url = url + transition + "q_type=anigif";
                         break;
                     case (type.album):
-                        url = url + "?q_type=album";
+                        url = url + transition + "q_type=album";
                         break;
                     default:
                         break;
 
                 }
+                transition = '&';
             }
-            else
+            if (search.Length != 0)
             {
-                var tmp = string.Concat("?q_any=", search);
+                var tmp = string.Concat(transition + "q_any=", search);
                 url = string.Concat(url, tmp);
             }
             var task = await Request(method, url, header);

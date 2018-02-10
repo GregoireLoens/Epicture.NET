@@ -55,22 +55,23 @@ namespace epitecture
 
         protected async override void OnNavigatedTo(NavigationEventArgs e) {
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            var search = e.Parameter as String;
+            var param = e.Parameter as Tuple<String, Api.AApi.size, Api.AApi.type>;
+            var search = param.Item1;
 
             if (search != old_search)
                 _images.Clear();
 
             if (_images.Count == 0) {
-                await GetItemsAsync(search);
+                await GetItemsAsync(search, param.Item2, param.Item3);
             }
 
-            TitleTextBlock.Text = "Imgur Search: \"" + search + "\"";
+            TitleTextBlock.Text = "Imgur Search: \"" + search + "\" Size: " + param.Item2.ToString() + " Type: " + param.Item3.ToString();
 
             base.OnNavigatedTo(e);
         }
 
-        private async Task GetItemsAsync(String search) {
-            var img = await imgur.SearchImage(search);
+        private async Task GetItemsAsync(String search, Api.AApi.size size, Api.AApi.type type) {
+            var img = await imgur.SearchImage(search, size, type);
             if (img == null)
                 return;
             foreach (var i in img) {

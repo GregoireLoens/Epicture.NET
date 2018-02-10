@@ -17,7 +17,7 @@
                         Minimum="180"
                         Maximum="540"
                         Value="270"
-                        Margin="0,5,0,0"
+                        Margin="0,8,0,0"
                         TickFrequency="90"
                         SnapsTo="Ticks"
                         Header="Grid item size" />
@@ -64,25 +64,44 @@
         </CommandBar>
 
         <TextBox Text="ex: Cat riding fluffy unicorns with green and pink tails" x:Name="SearchText"
-                 Margin="24,8,0,0"
+                 Margin="24,8,8,8"
                  Style="{StaticResource AutoSuggestBoxTextBoxStyle}"
                  RelativePanel.AlignLeftWithPanel="True"
                  RelativePanel.Below="TitleTextBlock"/>
+
+        <TextBlock Text="Size" RelativePanel.Below="SearchText"
+                  Margin="24,8,8,8"
+                  RelativePanel.AlignLeftWithPanel="True"
+                   x:Name="SizeHdr"
+                   Style="{StaticResource SubtitleTextBlockStyle}"/>
+        <ComboBox x:Name="SizeCB" RelativePanel.Below="SearchText"
+                  Margin="8"
+                  RelativePanel.RightOf="SizeHdr"
+                  ItemsSource="{x:Bind _sizes}"/>
+        <TextBlock Text="Type" RelativePanel.Below="SearchText"
+                  Margin="8"
+                  RelativePanel.RightOf="SizeCB"
+                   x:Name="TypeHdr"
+                   Style="{StaticResource SubtitleTextBlockStyle}"/>
+        <ComboBox x:Name="TypeCB" RelativePanel.Below="SearchText"
+                  Margin="8"
+                  RelativePanel.RightOf="TypeHdr"
+                  ItemsSource="{x:Bind _types}"/>
         
         <Button Content="Search" x:Name="SearchBt"
-                Margin="8,8,8,0"
-                RelativePanel.Below="TitleTextBlock"
-                RelativePanel.RightOf="SearchText"
+                Margin="8"
+                RelativePanel.Below="SearchText"
+                RelativePanel.RightOf="TypeCB"
                 Click="SearchBt_Click"/>
 
         <GridView x:Name="ImageGridView"
                   IsItemClickEnabled="True"
                   ItemClick="ImageGridView_ItemClick"
                   ItemsSource="{x:Bind _images}"
-                  Margin="0,0,0,8"
+                  Margin="8"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.AlignRightWithPanel="True"
-                  RelativePanel.Below="SearchText"
+                  RelativePanel.Below="TypeCB"
                   HorizontalAlignment="Center"
                   ItemTemplate="{StaticResource ImageGridView_DefaultItemTemplate}"
                   />
