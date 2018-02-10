@@ -11,7 +11,7 @@ namespace epitecture.Api
     {
         private static readonly HttpClient _client = new HttpClient();
 
-        public static async Task<HttpResponseMessage> Request(HttpMethod method, String url, String content, Dictionary<String, String> header)
+        public static async Task<HttpResponseMessage> Request(HttpMethod method, String url, Dictionary<String, String> header, Dictionary<String, String> content = null)
               {
                   var httpRequestMessage = new HttpRequestMessage();
                   httpRequestMessage.Method = method;
@@ -22,8 +22,7 @@ namespace epitecture.Api
                   }
                   if (method.Method == "POST")
                   {
-                      HttpContent httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-                      httpRequestMessage.Content = httpContent;
+                    httpRequestMessage.Content = new FormUrlEncodedContent(content.ToArray());
                   }
                   return await _client.SendAsync(httpRequestMessage);
               }

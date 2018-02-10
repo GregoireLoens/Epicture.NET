@@ -1,21 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Windows.Storage;
 
 namespace epitecture.Api.Imgur
 {
     class Imgur : Api
     {
-        public override Task<IList<bool>> addToFav()
+        public override async Task<bool> Fav(String id)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override Task<IList<bool>> delFav()
-        {
-            throw new System.NotImplementedException();
+            var method = new HttpMethod("get");
+            var url = "https://api.imgur.com/3/image/";
+            var content = "";
+            Dictionary<string, string> header = new Dictionary<string, string>
+                 {
+                     {"Authorization", "Bearer a7e66bd16f106e8ac0a514be2d4c869ed497c299"}
+                 };
+            url = url + id + "/favorite";
+            var task = await Request(method, url, header);
+            if (task.IsSuccessStatusCode)
+            {
+                var result = task.Content.ReadAsStringAsync();
+                return (true);
+            }
+            return false;
         }
 
         public override void Init()
@@ -23,14 +34,14 @@ namespace epitecture.Api.Imgur
 
       public override async Task<IList<Img>> LoadImage()
       {
-                 var method = new HttpMethod("get");
-                 var url = "https://api.imgur.com/3/gallery/hot";
-                 var content = "";
-                 Dictionary<string, string> header = new Dictionary<string, string>
+            var method = new HttpMethod("get");
+            var url = "https://api.imgur.com/3/gallery/hot";
+            var content = "";
+            Dictionary<string, string> header = new Dictionary<string, string>
                  {
-                     {"Authorization", "Client-ID 55c8986212a8f48"}
+                     {"Authorization", "Bearer a7e66bd16f106e8ac0a514be2d4c869ed497c299"}
                  };
-                 var task = await Request(method, url, content, header);
+            var task = await Request(method, url, header);
             if (task.IsSuccessStatusCode)
             {
                 var result = task.Content.ReadAsStringAsync();
@@ -50,7 +61,7 @@ namespace epitecture.Api.Imgur
                 }
             }
             return (null);
-      }
+        }
 
         public override async Task<Infos> SearchImage(string search = "", size sz = 0, type tp = 0)
         {
@@ -59,7 +70,7 @@ namespace epitecture.Api.Imgur
             var content = "";
             Dictionary<string, string> header = new Dictionary<string, string>
                  {
-                     {"Authorization", "Client-ID 55c8986212a8f48"}
+                     {"Authorization", "Bearer a7e66bd16f106e8ac0a514be2d4c869ed497c299"}
                  };
             if (sz != 0)
             {
@@ -114,7 +125,7 @@ namespace epitecture.Api.Imgur
                 var tmp = string.Concat("?q_any=", search);
                 url = string.Concat(url, tmp);
             }
-            var task = await Request(method, url, content, header);
+            var task = await Request(method, url, header);
             if (task.IsSuccessStatusCode)
             {
                 var result = task.Content.ReadAsStringAsync();
@@ -136,25 +147,38 @@ namespace epitecture.Api.Imgur
             return (null);
         }
 
-        public string Encode(String Path)
+        public async Task<string> EncodeAsync(StorageFile file)
         {
-            byte[] imageArray = System.IO.File.ReadAllBytes(Path);
-            string base64ImageRepresentation = Convert.ToBase64String(imageArray);
-            return base64ImageRepresentation;
+            byte[] byteArray;
+            using (var inputStream = await file.OpenSequentialReadAsync())
+            {
+                var readStream = inputStream.AsStreamForRead();
+                byteArray = new byte[readStream.Length];
+                await readStream.ReadAsync(byteArray, 0, byteArray.Length);
+            }
+            string base64 = Convert.ToBase64String(byteArray);
+            return base64;
         }
 
-        public override async Task<bool> UploadImage(String Path)
+        public async Task<bool> UploadImage(StorageFile file)
         {
             var method = new HttpMethod("post");
             var url = "https://api.imgur.com/3/image";
-            var base64 = Encode(Path);
-            var content = "image=" + base64 + ",type=base64";
+            var base64 = EncodeAsync(file);
+            var res = base64.Result;
+            var content = new Dictionary<String, String>
+                    {
+                        {"image", res},
+                        {"type", "base64"}
+                    };
 
             Dictionary<string, string> header = new Dictionary<string, string>
-                 {
-                     {"Authorization", "Bearer a7e66bd16f106e8ac0a514be2d4c869ed497c299"}
-                 };
-            var task = await Request(method, url, content, header);
+                         {
+                             {"Authorization", "Bearer a7e66bd16f106e8ac0a514be2d4c869ed497c299"}
+                         };
+            var task = Request(method, url, content, header);
+            var toto = task.Result;
+            var titi = toto.Content.ReadAsStringAsync();
             return true;
         }
     }

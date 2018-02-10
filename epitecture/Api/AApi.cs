@@ -14,7 +14,6 @@ namespace epitecture.Api
         public virtual Task<IList<Img>> LoadImage() { return null; }
         public virtual Task<bool> UploadImage(String Path) { return null;  }
         public virtual Task<Infos> SearchImage(String search = "", size sz = 0, type tp = 0) { return null; }
-        public virtual Task<IList<bool>> addToFav() { return null; }
-        public virtual Task<IList<bool>> delFav() { return null; }
+        public virtual Task<bool> Fav(String id) { return null; }
     }
 }
