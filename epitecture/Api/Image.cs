@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace epitecture.Api
 {
-   class Image
+   public class Img
        {
            public String id { set; get; } = "";
            public String title { set; get; } = "";

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace epitecture.Api
 {
-class Infos
+    public class Infos
     {
         public IList<Data> data { set; get; }
     }
