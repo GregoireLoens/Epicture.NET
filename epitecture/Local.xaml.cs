@@ -60,7 +60,6 @@ namespace epitecture
         }
 
         private async Task GetItemsAsync() {
-            StorageFolder appInstalledFolder = Package.Current.InstalledLocation;
             QueryOptions queryOption = new QueryOptions(CommonFileQuery.OrderByTitle, new string[] { ".png", ".jpg", ".jpeg" });
             queryOption.FolderDepth = FolderDepth.Deep;
             Queue<IStorageFolder> folders = new Queue<IStorageFolder>();
@@ -75,6 +74,10 @@ namespace epitecture
                 }
                 _images.Add(bitmapImage);
             }
+        }
+
+        private void ImageGridView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            this.Frame.Navigate(typeof(test), sender);
         }
     }
 }
