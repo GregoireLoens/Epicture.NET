@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.Storage;
 
-namespace epitecture.Api
+namespace epitecture
 {
    public class Img
        {
@@ -13,5 +15,8 @@ namespace epitecture.Api
            public String width { set; get; } = "";
            public String height { set; get; } = "";
            public String link { set; get; } = "";
-       }
+           public BitmapImage data = null;
+           public String FormatedSize { get { return width + "x" + height; } }
+           public StorageFile file = null;
+        }
 }

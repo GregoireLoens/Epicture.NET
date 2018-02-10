@@ -19,7 +19,7 @@ namespace epitecture
 {
     public sealed partial class test : Page{
 
-        private BitmapImage bitmapImage;
+        private Img image;
 
         public test() {
             this.InitializeComponent();
@@ -38,8 +38,7 @@ namespace epitecture
 
         protected async override void OnNavigatedTo(NavigationEventArgs e) {
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            var _img = e.Parameter as Image;
-            bitmapImage = _img.Source as BitmapImage;
+            image = e.Parameter as Img;
             base.OnNavigatedTo(e);
         }
     }
