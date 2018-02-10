@@ -20,7 +20,7 @@ namespace epitecture
 {
     public sealed partial class Local : Page, INotifyPropertyChanged {
 
-        private ObservableCollection<BitmapImage> _images { get; } = new ObservableCollection<BitmapImage>();
+        private ObservableCollection<Img> _images { get; } = new ObservableCollection<Img>();
         public event PropertyChangedEventHandler PropertyChanged;
         public double ItemSize {
             get => _itemSize;
@@ -67,17 +67,28 @@ namespace epitecture
 
 
             foreach (StorageFile file in files) {
-                BitmapImage bitmapImage = new BitmapImage();
+                var img = new Img();
+                img.data = new BitmapImage();
 
                 using (IRandomAccessStream fileStream = await file.OpenReadAsync()) {
-                    bitmapImage.SetSource(fileStream);
+                    img.data.SetSource(fileStream);
                 }
-                _images.Add(bitmapImage);
+                img.id = "";
+                img.title = file.DisplayName;
+                img.width = img.data.PixelWidth.ToString();
+                img.height = img.data.PixelHeight.ToString();
+                img.link = file.Path;
+                img.file = file;
+                _images.Add(img);
             }
         }
 
         private void ImageGridView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             this.Frame.Navigate(typeof(test), sender);
+        }
+
+        private void ImageGridView_ItemClick(object sender, ItemClickEventArgs e) {
+            this.Frame.Navigate(typeof(test), e.ClickedItem);
         }
     }
 }

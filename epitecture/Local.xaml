@@ -29,7 +29,7 @@
         </Flyout>
 
         <DataTemplate x:Key="ImageGridView_DefaultItemTemplate"
-                      x:DataType="BitmapImage">
+                      x:DataType="local:Img">
             <Grid Height="{Binding Value, ElementName=ZoomSlider}"
                   Width="{Binding Value, ElementName=ZoomSlider}"
                   Margin="8">
@@ -38,12 +38,12 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Image x:Name="ItemImage" Source="{x:Bind}" Stretch="Uniform" Tapped="ImageGridView_Tapped"/>
+                <Image x:Name="ItemImage" Source="{x:Bind data}" Stretch="Uniform"/>
 
                 <StackPanel Orientation="Vertical" Grid.Row="1">
-                    <TextBlock Text="{x:Bind UriSource}"  HorizontalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="{x:Bind title}"  HorizontalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}" />
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="50x50" HorizontalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}" Margin="8,0,0,0" />
+                        <TextBlock Text="{x:Bind FormatedSize}" HorizontalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}" Margin="8,0,0,0" />
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -68,13 +68,16 @@
         </CommandBar>
 
         <GridView x:Name="ImageGridView"
+                  IsItemClickEnabled="True"
+                  ItemClick="ImageGridView_ItemClick"
                   ItemsSource="{x:Bind _images}"
                   Margin="0,0,0,8"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.AlignRightWithPanel="True"
                   RelativePanel.Below="TitleTextBlock"
                   HorizontalAlignment="Center"
-                  ItemTemplate="{StaticResource ImageGridView_DefaultItemTemplate}"/>
+                  ItemTemplate="{StaticResource ImageGridView_DefaultItemTemplate}"
+                  />
 
     </RelativePanel>
 
