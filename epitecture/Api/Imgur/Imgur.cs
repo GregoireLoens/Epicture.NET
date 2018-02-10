@@ -14,7 +14,6 @@ namespace epitecture.Api.Imgur
         {
             var method = new HttpMethod("POST");
             var url = "https://api.imgur.com/3/image/";
-            var content = "";
             Dictionary<string, string> header = new Dictionary<string, string>
                  {
                      {"Authorization", "Bearer a7e66bd16f106e8ac0a514be2d4c869ed497c299"}
@@ -26,11 +25,10 @@ namespace epitecture.Api.Imgur
         public override void Init()
         {}
 
-      public override async Task<IList<Img>> LoadImage()
-      {
+        public override async Task<IList<Img>> LoadImage()
+        {
             var method = new HttpMethod("GET");
-            var url = "https://api.imgur.com/3/gallery/hot";
-            var content = "";
+            var url = "https://api.imgur.com/3/gallery/hot/";
             Dictionary<string, string> header = new Dictionary<string, string>
                  {
                      {"Authorization", "Bearer a7e66bd16f106e8ac0a514be2d4c869ed497c299"}
@@ -38,9 +36,9 @@ namespace epitecture.Api.Imgur
             var task = await Request(method, url, header);
             if (task.IsSuccessStatusCode)
             {
-                var result = task.Content.ReadAsStringAsync();
-                var json = JsonConvert.DeserializeObject<Infos>(result.Result);
-                var img = await GetImageData(json);
+                var result = await task.Content.ReadAsStringAsync();
+                var json = JsonConvert.DeserializeObject<Infos>(result);
+                var img = GetImageData(json);
                 return (img);
             }
             return (null);
@@ -50,7 +48,6 @@ namespace epitecture.Api.Imgur
         {
             var method = new HttpMethod("GET");
             var url = "https://api.imgur.com/3/gallery/search/";
-            var content = "";
             Dictionary<string, string> header = new Dictionary<string, string>
                  {
                      {"Authorization", "Bearer a7e66bd16f106e8ac0a514be2d4c869ed497c299"}
@@ -111,9 +108,9 @@ namespace epitecture.Api.Imgur
             var task = await Request(method, url, header);
             if (task.IsSuccessStatusCode)
             {
-                var result = task.Content.ReadAsStringAsync();
-                var json = JsonConvert.DeserializeObject<Infos>(result.Result);
-                var img = await GetImageData(json);
+                var result = await task.Content.ReadAsStringAsync();
+                var json = JsonConvert.DeserializeObject<Infos>(result);
+                var img = GetImageData(json);
                 return (img);
             }
             return (null);

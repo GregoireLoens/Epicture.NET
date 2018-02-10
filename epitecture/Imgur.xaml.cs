@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace epitecture
 {
-    public sealed partial class Local : Page, INotifyPropertyChanged {
+    public sealed partial class Imgur : Page, INotifyPropertyChanged {
 
         private ObservableCollection<Img> _images { get; } = new ObservableCollection<Img>();
         public event PropertyChangedEventHandler PropertyChanged;
@@ -33,7 +33,9 @@ namespace epitecture
         }
         private double _itemSize;
 
-        public Local()
+        Api.Imgur.Imgur imgur = new Api.Imgur.Imgur();
+
+        public Imgur()
         {
             this.InitializeComponent();
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
@@ -60,26 +62,11 @@ namespace epitecture
         }
 
         private async Task GetItemsAsync() {
-            QueryOptions queryOption = new QueryOptions(CommonFileQuery.OrderByTitle, new string[] { ".png", ".jpg", ".jpeg" });
-            queryOption.FolderDepth = FolderDepth.Deep;
-            Queue<IStorageFolder> folders = new Queue<IStorageFolder>();
-            var files = await KnownFolders.PicturesLibrary.CreateFileQueryWithOptions(queryOption).GetFilesAsync();
-
-
-            foreach (StorageFile file in files) {
-                var img = new Img();
-                img.data = new BitmapImage();
-
-                using (IRandomAccessStream fileStream = await file.OpenReadAsync()) {
-                    img.data.SetSource(fileStream);
-                }
-                img.id = "";
-                img.title = file.DisplayName;
-                img.width = img.data.PixelWidth.ToString();
-                img.height = img.data.PixelHeight.ToString();
-                img.link = file.Path;
-                img.file = file;
-                _images.Add(img);
+            var img = await imgur.LoadImage();
+            if (img == null)
+                return;
+            foreach (var i in img) {
+                _images.Add(i);
             }
         }
 

@@ -25,5 +25,9 @@ namespace epitecture
         private void LocalButtonClick(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             this.Frame.Navigate(typeof(Local));
         }
+
+        private void ImgurButtonClick(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Imgur));
+        }
     }
 }

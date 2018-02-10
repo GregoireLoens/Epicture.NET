@@ -29,24 +29,19 @@ namespace epitecture.Api
                   return await _client.SendAsync(httpRequestMessage);
               }
 
-        public static async Task<IList<Img>> GetImageData(Infos data)
+        public static IList<Img> GetImageData(Infos data)
         {
             IList<Img> img = new List<Img>();
 
             foreach (var dt in data.data)
             {
+                if (dt.images == null)
+                    continue;
                 foreach (var tmp in dt.images)
                 {
                     if (tmp != null)
                     {
-                        System.Net.WebRequest request = System.Net.WebRequest.Create(tmp.link);
-                        System.Net.WebResponse response = await request.GetResponseAsync();
-                        System.IO.Stream responseStream = response.GetResponseStream();
-                        BitmapImage bitmap2 = new BitmapImage();
-                        var memSream = new MemoryStream();
-                        await responseStream.CopyToAsync(memSream);
-                        bitmap2.SetSource(memSream.AsRandomAccessStream());
-                        tmp.data = bitmap2;
+                        tmp.data = new BitmapImage(new Uri(tmp.link));
                         img.Add(tmp);
                     }
                 }
