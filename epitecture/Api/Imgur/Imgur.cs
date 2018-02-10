@@ -26,7 +26,7 @@ namespace epitecture.Api.Imgur
         public override void Init()
         {}
 
-      public override async Task<Infos> LoadImage()
+      public override async Task<IList<Img>> LoadImage()
       {
             var method = new HttpMethod("GET");
             var url = "https://api.imgur.com/3/gallery/hot";
@@ -40,11 +40,13 @@ namespace epitecture.Api.Imgur
             {
                 var result = task.Content.ReadAsStringAsync();
                 var json = JsonConvert.DeserializeObject<Infos>(result.Result);
+                var img = await GetImageData(json);
+                return (img);
             }
             return (null);
         }
 
-        public override async Task<Infos> SearchImage(string search = "", size sz = 0, type tp = 0)
+        public override async Task<IList<Img>> SearchImage(string search = "", size sz = 0, type tp = 0)
         {
             var method = new HttpMethod("GET");
             var url = "https://api.imgur.com/3/gallery/search/";
@@ -111,19 +113,8 @@ namespace epitecture.Api.Imgur
             {
                 var result = task.Content.ReadAsStringAsync();
                 var json = JsonConvert.DeserializeObject<Infos>(result.Result);
-                foreach (var tmp in json.data)
-                {
-                    if (tmp.images != null)
-                    {
-                        foreach (var tmp2 in tmp.images)
-                        {
-                            if (tmp2 != null)
-                            {
-                                //get içi les infos dont on a besoin chaque tmp2 est un obj image
-                            }
-                        }
-                    }
-                }
+                var img = await GetImageData(json);
+                return (img);
             }
             return (null);
         }

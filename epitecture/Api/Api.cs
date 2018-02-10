@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace epitecture.Api
 {
@@ -26,5 +28,30 @@ namespace epitecture.Api
                   }
                   return await _client.SendAsync(httpRequestMessage);
               }
+
+        public static async Task<IList<Img>> GetImageData(Infos data)
+        {
+            IList<Img> img = new List<Img>();
+
+            foreach (var dt in data.data)
+            {
+                foreach (var tmp in dt.images)
+                {
+                    if (tmp != null)
+                    {
+                        System.Net.WebRequest request = System.Net.WebRequest.Create(tmp.link);
+                        System.Net.WebResponse response = await request.GetResponseAsync();
+                        System.IO.Stream responseStream = response.GetResponseStream();
+                        BitmapImage bitmap2 = new BitmapImage();
+                        var memSream = new MemoryStream();
+                        await responseStream.CopyToAsync(memSream);
+                        bitmap2.SetSource(memSream.AsRandomAccessStream());
+                        tmp.data = bitmap2;
+                        img.Add(tmp);
+                    }
+                }
+            }
+            return (img);
+        }
     }
 }

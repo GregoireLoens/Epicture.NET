@@ -9,14 +9,14 @@ using Windows.Storage;
 namespace epitecture
 {
    public class Img
-       {
-           public String id { set; get; } = "";
-           public String title { set; get; } = "";
-           public String width { set; get; } = "";
-           public String height { set; get; } = "";
-           public String link { set; get; } = "";
-           public BitmapImage data = null;
-           public String FormatedSize { get { return width + "x" + height; } }
-           public StorageFile file = null;
-        }
+    {
+        public String id { set; get; } = "";
+        public String title { set; get; } = "";
+        public String width { set; get; } = "";
+        public String height { set; get; } = "";
+        public String link { set; get; } = "";
+        public BitmapImage data = null;
+        public String FormatedSize { get { return width + "x" + height; } }
+        public StorageFile file = null;
+    }
 }
