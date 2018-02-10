@@ -38,7 +38,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Image x:Name="ItemImage" Source="{x:Bind}" Stretch="Uniform" />
+                <Image x:Name="ItemImage" Source="{x:Bind}" Stretch="Uniform" Tapped="ImageGridView_Tapped"/>
 
                 <StackPanel Orientation="Vertical" Grid.Row="1">
                     <TextBlock Text="{x:Bind UriSource}"  HorizontalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" />
