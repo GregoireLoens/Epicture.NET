@@ -10,9 +10,9 @@ namespace epitecture.Api.Imgur
 {
     class Imgur : Api
     {
-        public override async Task<bool> Fav(String id)
+        public override async Task Fav(String id)
         {
-            var method = new HttpMethod("get");
+            var method = new HttpMethod("GET");
             var url = "https://api.imgur.com/3/image/";
             var content = "";
             Dictionary<string, string> header = new Dictionary<string, string>
@@ -21,20 +21,14 @@ namespace epitecture.Api.Imgur
                  };
             url = url + id + "/favorite";
             var task = await Request(method, url, header);
-            if (task.IsSuccessStatusCode)
-            {
-                var result = task.Content.ReadAsStringAsync();
-                return (true);
-            }
-            return false;
         }
 
         public override void Init()
         {}
 
-      public override async Task<IList<Img>> LoadImage()
+      public override async Task<Infos> LoadImage()
       {
-            var method = new HttpMethod("get");
+            var method = new HttpMethod("GET");
             var url = "https://api.imgur.com/3/gallery/hot";
             var content = "";
             Dictionary<string, string> header = new Dictionary<string, string>
@@ -65,7 +59,7 @@ namespace epitecture.Api.Imgur
 
         public override async Task<Infos> SearchImage(string search = "", size sz = 0, type tp = 0)
         {
-            var method = new HttpMethod("get");
+            var method = new HttpMethod("GET");
             var url = "https://api.imgur.com/3/gallery/search/";
             var content = "";
             Dictionary<string, string> header = new Dictionary<string, string>
@@ -160,14 +154,15 @@ namespace epitecture.Api.Imgur
             return base64;
         }
 
-        public async Task<bool> UploadImage(StorageFile file)
+        public async Task UploadImage(Img img)
         {
-            var method = new HttpMethod("post");
+            var method = new HttpMethod("POST");
             var url = "https://api.imgur.com/3/image";
-            var base64 = EncodeAsync(file);
+            var base64 = EncodeAsync(img.file);
             var res = base64.Result;
             var content = new Dictionary<String, String>
                     {
+                        {"title", img.title},
                         {"image", res},
                         {"type", "base64"}
                     };
@@ -176,10 +171,7 @@ namespace epitecture.Api.Imgur
                          {
                              {"Authorization", "Bearer a7e66bd16f106e8ac0a514be2d4c869ed497c299"}
                          };
-            var task = Request(method, url, content, header);
-            var toto = task.Result;
-            var titi = toto.Content.ReadAsStringAsync();
-            return true;
+            var task = await Request(method, url, content, header);
         }
     }
 }

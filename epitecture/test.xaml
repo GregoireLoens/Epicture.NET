@@ -23,7 +23,7 @@
                 <StackPanel>
                     <TextBlock Text="{x:Bind image.title}" Style="{StaticResource SubtitleTextBlockStyle}" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                     <TextBlock Text="{x:Bind image.FormatedSize}" Style="{StaticResource BodyTextBlockStyle}" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                    <Button Content="Send to Imgur" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <Button x:Name="SendImgur" Content="Send to Imgur" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Button_Click"/>
                 </StackPanel>
             </SplitView.Pane>
 

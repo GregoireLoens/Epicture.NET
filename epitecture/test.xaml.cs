@@ -20,6 +20,7 @@ namespace epitecture
     public sealed partial class test : Page{
 
         private Img image;
+        Api.Imgur.Imgur imgur = new Api.Imgur.Imgur();
 
         public test() {
             this.InitializeComponent();
@@ -40,6 +41,10 @@ namespace epitecture
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             image = e.Parameter as Img;
             base.OnNavigatedTo(e);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            imgur.UploadImage(image);
         }
     }
 }

@@ -11,9 +11,9 @@ namespace epitecture.Api
         public enum type { wrong = 0, jpg = 1, png = 2, gif = 3, anigif = 4, album = 5 };
 
         public virtual void Init() { }
-        public virtual Task<IList<Img>> LoadImage() { return null; }
-        public virtual Task<bool> UploadImage(String Path) { return null;  }
-        public virtual Task<Infos> SearchImage(String search = "", size sz = 0, type tp = 0) { return null; }
-        public virtual Task<bool> Fav(String id) { return null; }
+        public virtual async Task<Infos> LoadImage() { return null; }
+        public virtual async Task UploadImage(String Path) { }
+        public virtual async Task<Infos> SearchImage(String search = "", size sz = 0, type tp = 0) { return null; }
+        public virtual async Task Fav(String id) { }
     }
 }
