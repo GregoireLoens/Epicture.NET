@@ -94,8 +94,11 @@
   <ItemGroup>
     <Compile Include="Api\AApi.cs" />
     <Compile Include="Api\Api.cs" />
+    <Compile Include="Api\Data.cs" />
     <Compile Include="Api\Flickr\FlickrApi.cs" />
     <Compile Include="Api\Image.cs" />
+    <Compile Include="Api\Imgur\Imgur.cs" />
+    <Compile Include="Api\Infos.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -147,6 +150,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>10.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
