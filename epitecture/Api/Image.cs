@@ -15,6 +15,7 @@ namespace epitecture
         public String width { set; get; } = "";
         public String height { set; get; } = "";
         public String link { set; get; } = "";
+        public bool favorite { set; get; } = false;
         public BitmapImage data = null;
         public String FormatedSize { get { return width + "x" + height; } }
         public StorageFile file = null;

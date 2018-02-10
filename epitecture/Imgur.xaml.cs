@@ -73,5 +73,9 @@ namespace epitecture
         private void ImageGridView_ItemClick(object sender, ItemClickEventArgs e) {
             this.Frame.Navigate(typeof(ImgurDetails), e.ClickedItem);
         }
+
+        private void SearchBt_Click(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(ImgurSearch), SearchText.Text);
+        }
     }
 }

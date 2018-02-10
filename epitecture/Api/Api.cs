@@ -24,7 +24,8 @@ namespace epitecture.Api
                   }
                   if (method.Method == "POST")
                   {
-                    httpRequestMessage.Content = new FormUrlEncodedContent(content.ToArray());
+                    if (content != null)
+                        httpRequestMessage.Content = new FormUrlEncodedContent(content.ToArray());
                   }
                   return await _client.SendAsync(httpRequestMessage);
               }

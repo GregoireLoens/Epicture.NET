@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
+using Windows.Storage.Search;
 using Windows.Storage.Streams;
 using Windows.System.Profile;
 using Windows.UI.Core;
@@ -17,12 +18,27 @@ using Windows.UI.Xaml.Navigation;
 
 namespace epitecture
 {
-    public sealed partial class ImgurDetails : Page {
+    public sealed partial class ImgurSearch : Page, INotifyPropertyChanged {
 
-        private Img image;
+        private ObservableCollection<Img> _images { get; } = new ObservableCollection<Img>();
+        public event PropertyChangedEventHandler PropertyChanged;
+        public double ItemSize {
+            get => _itemSize;
+            set {
+                if (_itemSize != value) {
+                    _itemSize = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemSize)));
+                }
+            }
+        }
+        private double _itemSize;
+
+        String old_search = "";
+
         Api.Imgur.Imgur imgur = new Api.Imgur.Imgur();
 
-        public ImgurDetails() {
+        public ImgurSearch()
+        {
             this.InitializeComponent();
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
         }
@@ -39,23 +55,31 @@ namespace epitecture
 
         protected async override void OnNavigatedTo(NavigationEventArgs e) {
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            image = e.Parameter as Img;
-            if (image.favorite)
-                Fav.Content = "Unfav";
+            var search = e.Parameter as String;
+
+            if (search != old_search)
+                _images.Clear();
+
+            if (_images.Count == 0) {
+                await GetItemsAsync(search);
+            }
+
+            TitleTextBlock.Text = "Imgur Search: \"" + search + "\"";
+
             base.OnNavigatedTo(e);
         }
 
-        private void Fav_Click(object sender, RoutedEventArgs e) {
-            if (image.favorite) {
-                Fav.Content = "Fav";
-                image.favorite = false;
-                imgur.Fav(image.id);
+        private async Task GetItemsAsync(String search) {
+            var img = await imgur.SearchImage(search);
+            if (img == null)
+                return;
+            foreach (var i in img) {
+                _images.Add(i);
             }
-            else {
-                Fav.Content = "Unfav";
-                image.favorite = true;
-                imgur.Fav(image.id);
-            }
+        }
+
+        private void ImageGridView_ItemClick(object sender, ItemClickEventArgs e) {
+            this.Frame.Navigate(typeof(ImgurDetails), e.ClickedItem);
         }
     }
 }

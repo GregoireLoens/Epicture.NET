@@ -102,6 +102,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ImgurSearch.xaml.cs">
+      <DependentUpon>ImgurSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Imgur.xaml.cs">
       <DependentUpon>Imgur.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ImgurSearch.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Imgur.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -12,7 +12,7 @@
         <TextBlock x:Name="TitleTextBlock"
                    TextWrapping="Wrap"
                    Margin="24,24,0,0"
-                   Text="Send Local Image"
+                   Text="Imgur Image"
                    Style="{StaticResource TitleTextBlockStyle}"/>
 
         <SplitView IsPaneOpen="True"
@@ -23,11 +23,11 @@
                 <StackPanel>
                     <TextBlock Text="{x:Bind image.title}" Style="{StaticResource SubtitleTextBlockStyle}" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                     <TextBlock Text="{x:Bind image.FormatedSize}" Style="{StaticResource BodyTextBlockStyle}" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                    <Button x:Name="SendImgur" Content="Send to Imgur" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <Button x:Name="Fav" Content="Fav" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Fav_Click"/>
                 </StackPanel>
             </SplitView.Pane>
 
-            <Image x:Name="MainImage" Source="{x:Bind image.data}" Margin="16,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Image x:Name="MainImage" Source="{x:Bind image.data}" Margin="16,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         </SplitView>
 
