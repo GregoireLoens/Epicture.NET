@@ -12,7 +12,7 @@ namespace epitecture.Api.Imgur
     {
         public override async Task Fav(String id)
         {
-            var method = new HttpMethod("GET");
+            var method = new HttpMethod("POST");
             var url = "https://api.imgur.com/3/image/";
             var content = "";
             Dictionary<string, string> header = new Dictionary<string, string>
@@ -40,19 +40,6 @@ namespace epitecture.Api.Imgur
             {
                 var result = task.Content.ReadAsStringAsync();
                 var json = JsonConvert.DeserializeObject<Infos>(result.Result);
-                foreach (var tmp in json.data)
-                {
-                    if (tmp.images != null)
-                    {
-                        foreach (var tmp2 in tmp.images)
-                        {
-                            if (tmp2 != null)
-                            {
-                                //get içi les infos dont on a besoin chaque tmp2 est un obj image
-                            }
-                        }
-                    }
-                }
             }
             return (null);
         }
@@ -158,20 +145,19 @@ namespace epitecture.Api.Imgur
         {
             var method = new HttpMethod("POST");
             var url = "https://api.imgur.com/3/image";
-            var base64 = EncodeAsync(img.file);
-            var res = base64.Result;
+            var base64 = await EncodeAsync(img.file);
             var content = new Dictionary<String, String>
                     {
-                        {"title", img.title},
-                        {"image", res},
-                        {"type", "base64"}
+                        {"image", base64},
+                        {"type", "base64"},
+                        {"title", img.title}
                     };
 
             Dictionary<string, string> header = new Dictionary<string, string>
                          {
                              {"Authorization", "Bearer a7e66bd16f106e8ac0a514be2d4c869ed497c299"}
                          };
-            var task = await Request(method, url, content, header);
+            var task = await Request(method, url, header, content);
         }
     }
 }
