@@ -108,8 +108,11 @@
     <Compile Include="Local.xaml.cs">
       <DependentUpon>Local.xaml</DependentUpon>
     </Compile>
-    <Compile Include="test.xaml.cs">
-      <DependentUpon>test.xaml</DependentUpon>
+    <Compile Include="ImgurDetails.xaml.cs">
+      <DependentUpon>ImgurDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LocalDetails.xaml.cs">
+      <DependentUpon>LocalDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -145,7 +148,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="test.xaml">
+    <Page Include="ImgurDetails.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LocalDetails.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

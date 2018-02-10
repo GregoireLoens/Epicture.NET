@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
-using Windows.Storage.Search;
 using Windows.Storage.Streams;
 using Windows.System.Profile;
 using Windows.UI.Core;
@@ -18,25 +17,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace epitecture
 {
-    public sealed partial class Imgur : Page, INotifyPropertyChanged {
+    public sealed partial class LocalDetails : Page{
 
-        private ObservableCollection<Img> _images { get; } = new ObservableCollection<Img>();
-        public event PropertyChangedEventHandler PropertyChanged;
-        public double ItemSize {
-            get => _itemSize;
-            set {
-                if (_itemSize != value) {
-                    _itemSize = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemSize)));
-                }
-            }
-        }
-        private double _itemSize;
-
+        private Img image;
         Api.Imgur.Imgur imgur = new Api.Imgur.Imgur();
 
-        public Imgur()
-        {
+        public LocalDetails() {
             this.InitializeComponent();
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
         }
@@ -53,25 +39,12 @@ namespace epitecture
 
         protected async override void OnNavigatedTo(NavigationEventArgs e) {
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
-            if (_images.Count == 0) {
-                await GetItemsAsync();
-            }
-
+            image = e.Parameter as Img;
             base.OnNavigatedTo(e);
         }
 
-        private async Task GetItemsAsync() {
-            var img = await imgur.LoadImage();
-            if (img == null)
-                return;
-            foreach (var i in img) {
-                _images.Add(i);
-            }
-        }
-
-        private void ImageGridView_ItemClick(object sender, ItemClickEventArgs e) {
-            this.Frame.Navigate(typeof(ImgurDetails), e.ClickedItem);
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            imgur.UploadImage(image);
         }
     }
 }

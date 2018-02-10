@@ -84,7 +84,7 @@ namespace epitecture
         }
 
         private void ImageGridView_ItemClick(object sender, ItemClickEventArgs e) {
-            this.Frame.Navigate(typeof(test), e.ClickedItem);
+            this.Frame.Navigate(typeof(LocalDetails), e.ClickedItem);
         }
     }
 }

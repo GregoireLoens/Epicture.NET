@@ -17,12 +17,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace epitecture
 {
-    public sealed partial class test : Page{
+    public sealed partial class ImgurDetails : Page {
 
         private Img image;
         Api.Imgur.Imgur imgur = new Api.Imgur.Imgur();
 
-        public test() {
+        public ImgurDetails() {
             this.InitializeComponent();
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
         }
@@ -41,10 +41,6 @@ namespace epitecture
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             image = e.Parameter as Img;
             base.OnNavigatedTo(e);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            imgur.UploadImage(image);
         }
     }
 }

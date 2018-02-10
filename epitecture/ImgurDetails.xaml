@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="epitecture.test"
+    x:Class="epitecture.ImgurDetails"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:epitecture"
@@ -23,7 +23,7 @@
                 <StackPanel>
                     <TextBlock Text="{x:Bind image.title}" Style="{StaticResource SubtitleTextBlockStyle}" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                     <TextBlock Text="{x:Bind image.FormatedSize}" Style="{StaticResource BodyTextBlockStyle}" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                    <Button x:Name="SendImgur" Content="Send to Imgur" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Button_Click"/>
+                    <Button x:Name="SendImgur" Content="Send to Imgur" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                 </StackPanel>
             </SplitView.Pane>
 

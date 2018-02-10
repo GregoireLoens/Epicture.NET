@@ -21,10 +21,6 @@
                         TickFrequency="90"
                         SnapsTo="Ticks"
                         Header="Grid item size" />
-                <ToggleSwitch x:Name="FitScreenToggle"
-                              Header="Fit to screen"
-                              MinWidth="100"
-                              ToolTipService.ToolTip="Resize images to use available space." />
             </StackPanel>
         </Flyout>
 
