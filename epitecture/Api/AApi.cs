@@ -10,9 +10,11 @@ namespace epitecture.Api
     {
         private String Token { set; get; }
 
-        public virtual  void Init() { }
-        public virtual void LoadImage() { }
-        public virtual void UploadImage() { }
-        public virtual void SearchImage() { }
+        public virtual void Init() { }
+        public virtual async Task<IList<Image>> LoadImage() { }
+        public virtual async Task<bool> UploadImage() { }
+        public virtual async Task<Ilist<Image>> SearchImage(string search = "", size sz = 0, type tp = 0) { }
+        public virtual async Task<Ilist<bool>> addToFav() { }
+        public virtual async Task<Ilist<bool>> delFav() { }
     }
 }
