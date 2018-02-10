@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace epitecture.Api
 {
-  class Data
+  public class Data
      {
-         public IList<Image> images { set; get; }
+         public IList<Img> images { set; get; }
      }
 }

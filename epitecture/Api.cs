@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace epitecture.Api
 {
-    class Api: AApi
+    class Api : AApi
     {
         private static readonly HttpClient _client = new HttpClient();
 
-        static async Task<HttpResponseMessage> Request(HttpMethod method, String url, String content, Dictionary<String, String> header) 
+        static async Task<HttpResponseMessage> Request(HttpMethod method, String url, String content, Dictionary<String, String> header)
         {
             HttpRequestMessage request = new HttpRequestMessage();
             var httpRequestMessage = new HttpRequestMessage();
@@ -32,4 +32,5 @@ namespace epitecture.Api
 
             return await _client.SendAsync(request);
         }
+    }
 }
