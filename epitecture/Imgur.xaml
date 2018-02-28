@@ -1,0 +1,111 @@
+﻿<Page
+    x:Class="epitecture.Imgur"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:epitecture"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    RequestedTheme="Dark"
+    NavigationCacheMode="Enabled">
+
+    <Page.Resources>
+        <Flyout x:Key="zoomFlyout">
+            <StackPanel>
+                <Slider x:Name="ZoomSlider"
+                        Width="100"
+                        Minimum="180"
+                        Maximum="540"
+                        Value="270"
+                        Margin="0,8,0,0"
+                        TickFrequency="90"
+                        SnapsTo="Ticks"
+                        Header="Grid item size" />
+            </StackPanel>
+        </Flyout>
+
+        <DataTemplate x:Key="ImageGridView_DefaultItemTemplate"
+                      x:DataType="local:Img">
+            <Grid Height="{Binding Value, ElementName=ZoomSlider}"
+                  Width="{Binding Value, ElementName=ZoomSlider}"
+                  Margin="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Image x:Name="ItemImage" Source="{x:Bind data}" Stretch="Uniform"/>
+
+                <StackPanel Orientation="Vertical" Grid.Row="1">
+                    <TextBlock Text="{x:Bind title}"  HorizontalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="{x:Bind FormatedSize}" HorizontalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}" Margin="8,0,0,0" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock x:Name="TitleTextBlock"
+                   TextWrapping="Wrap"
+                   Margin="24,24,0,0"
+                   Text="Imgur Pictures"
+                   Style="{StaticResource TitleTextBlockStyle}"/>
+
+        <CommandBar x:Name="MainCommandBar"
+                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                    RelativePanel.AlignRightWithPanel="True"
+                    OverflowButtonVisibility="Collapsed"
+                    DefaultLabelPosition="Right">
+            <AppBarButton Icon="Zoom"
+                          Label="Zoom"
+                          Flyout="{StaticResource zoomFlyout}" />
+        </CommandBar>
+
+        <TextBox Text="ex: Cat riding fluffy unicorns with green and pink tails" x:Name="SearchText"
+                 Margin="24,8,8,8"
+                 Style="{StaticResource AutoSuggestBoxTextBoxStyle}"
+                 RelativePanel.AlignLeftWithPanel="True"
+                 RelativePanel.Below="TitleTextBlock"/>
+
+        <TextBlock Text="Size" RelativePanel.Below="SearchText"
+                  Margin="24,8,8,8"
+                  RelativePanel.AlignLeftWithPanel="True"
+                   x:Name="SizeHdr"
+                   Style="{StaticResource SubtitleTextBlockStyle}"/>
+        <ComboBox x:Name="SizeCB" RelativePanel.Below="SearchText"
+                  Margin="8"
+                  RelativePanel.RightOf="SizeHdr"
+                  ItemsSource="{x:Bind _sizes}"/>
+        <TextBlock Text="Type" RelativePanel.Below="SearchText"
+                  Margin="8"
+                  RelativePanel.RightOf="SizeCB"
+                   x:Name="TypeHdr"
+                   Style="{StaticResource SubtitleTextBlockStyle}"/>
+        <ComboBox x:Name="TypeCB" RelativePanel.Below="SearchText"
+                  Margin="8"
+                  RelativePanel.RightOf="TypeHdr"
+                  ItemsSource="{x:Bind _types}"/>
+        
+        <Button Content="Search" x:Name="SearchBt"
+                Margin="8"
+                RelativePanel.Below="SearchText"
+                RelativePanel.RightOf="TypeCB"
+                Click="SearchBt_Click"/>
+
+        <GridView x:Name="ImageGridView"
+                  IsItemClickEnabled="True"
+                  ItemClick="ImageGridView_ItemClick"
+                  ItemsSource="{x:Bind _images}"
+                  Margin="8"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True"
+                  RelativePanel.Below="TypeCB"
+                  HorizontalAlignment="Center"
+                  ItemTemplate="{StaticResource ImageGridView_DefaultItemTemplate}"
+                  />
+
+    </RelativePanel>
+
+</Page>
